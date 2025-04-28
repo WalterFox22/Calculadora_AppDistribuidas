@@ -12,14 +12,25 @@ public class ProcesoB  extends  Thread{
 
 
 
-    public void contar (int n){
-        for (int i=1; i <n ; i++){
-            System.out.println("inteaccion numero:" + i);
-        }
-    }
+    /*public void contar (int n){
+      for (int i=1; i <n ; i++){
+         System.out.println("inteaccion numero:" + i);
+       }
+    }*/
 
     @Override
     public  void run(){
-        contar(n);
+
+        // Bucle para que se ejecute sin importar si el otros procesos se terminan
+        for (int i=1; i <n ; i++){
+            System.out.println("inteaccion numero:" + i);
+            // logica para realizar eso
+            try{
+                sleep(2000);
+            }catch (InterruptedException e){
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 }

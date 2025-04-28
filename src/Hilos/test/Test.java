@@ -1,18 +1,27 @@
 package Hilos.test;
 
-import Hilos.clase.ProcesoA;
-import Hilos.clase.ProcesoB;
-import Hilos.clase.ProcesoC;
+import Hilos.clase.*;
 
 public class Test {
     public static void main(String[] args) {
         ProcesoA a = new ProcesoA("Walter");
-        ProcesoB b = new ProcesoB(6);
-        ProcesoC c = new ProcesoC(6);
+        ProcesoB b = new ProcesoB(100);
+        ProcesoC c = new ProcesoC(5);
+        //ProcesoD d = new ProcesoD();
 
-        c.start();
-        a.start();
+        // Se crea un tipo de constructor
+        Runnable x= new ProcesoD(50);
+        // Le vinvula a un objeto y se crea un hilo
+        Thread d = new Thread(x);
+
+        Runnable z = new ProcesosE();
+        Thread e = new Thread(z);
+
+     ;   a.start();
         b.start();
+        c.start();
+        d.start();
+        e.start();
     }
 
 }
