@@ -1,11 +1,13 @@
 package Hilos.clase;
 
-public class Persona {
-    private  String nombre;
-    private  String fechaNacimiento;
-    private  String direccion;
+import lombok.Getter;
+import lombok.Setter;
 
-    // Getter y setters
+public class Persona {
+    @Getter @Setter private  String nombre;
+    @Getter @Setter private  String fechaNacimiento;
+    @Getter @Setter private  String direccion;
+
 
 
 }
