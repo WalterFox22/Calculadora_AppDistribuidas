@@ -6,11 +6,13 @@ import Hilos.clase.ProcesoC;
 
 public class Test {
     public static void main(String[] args) {
-        ProcesoA a = new ProcesoA();
-        ProcesoB b = new ProcesoB();
-        ProcesoC c = new ProcesoC();
+        ProcesoA a = new ProcesoA("Walter");
+        ProcesoB b = new ProcesoB(6);
+        ProcesoC c = new ProcesoC(6);
 
-        c.dividir(10);
+        c.start();
+        a.start();
+        b.start();
     }
 
 }
