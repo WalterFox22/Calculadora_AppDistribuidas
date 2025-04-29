@@ -4,66 +4,72 @@ import Hilos.clase.ProcesoF;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Vista extends JFrame {
-    private JTextField valor1;
-    private JTextField valor2;
-    private JTextField valor3;
+    private JTextField marca;
+    private JTextField modelo;
+    private JTextField precio;
     private JButton procesar;
-    private JLabel Txt1;
-    private JPanel Txt2;
-    private JLabel Txt3;
+    private JLabel txt1;
+    private JLabel txt2;
+    private JLabel txt3;
 
     public Vista() {
-        setTitle("Captura de Datos");
-        setSize(400, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // Configurar ventana
+        setTitle("Ingreso de Autos");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 250);
         setLocationRelativeTo(null);
+        setLayout(new GridLayout(4, 2, 3, 3));
 
-        // Componentes
-        Txt1 = new JLabel("Ingrese la marca:");
-        valor1 = new JTextField(10);
-        JLabel txt2Label = new JLabel("Ingrese el modelo:");
-        valor2 = new JTextField(10);
-        Txt3 = new JLabel("Ingrese el precio:");
-        valor3 = new JTextField(10);
+        // Crear componentes
+        txt1 = new JLabel("Marca:");
+        txt2 = new JLabel("Modelo:");
+        txt3 = new JLabel("Precio:");
+        marca = new JTextField();
+        modelo = new JTextField();
+        precio = new JTextField();
         procesar = new JButton("Procesar");
-        Txt2 = new JPanel(new GridLayout(4, 2, 5, 5));
 
-        // Añadir componentes al panel
-        Txt2.add(Txt1);
-        Txt2.add(valor1);
-        Txt2.add(txt2Label);
-        Txt2.add(valor2);
-        Txt2.add(Txt3);
-        Txt2.add(valor3);
-        Txt2.add(new JLabel()); // espacio vacío
-        Txt2.add(procesar);
-
-        add(Txt2);
+        // Agregar componentes a la ventana
+        add(txt1);
+        add(marca);
+        add(txt2);
+        add(modelo);
+        add(txt3);
+        add(precio);
+        add(new JLabel()); // Espacio vacío
+        add(procesar);
 
         // Acción del botón
-        procesar.addActionListener(e -> {
-            String marca = valor1.getText();
-            String modelo = valor2.getText();
-            double precio;
+        procesar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String m = marca.getText();
+                String mo = modelo.getText();
+                double p;
+                try {
+                    p = Double.parseDouble(precio.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Precio inválido", "Error", JOptionPane.ERROR_MESSAGE);
+                    dispose();
+                    return;
+                }
 
-            try {
-                precio = Double.parseDouble(valor3.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
-                return;
+                ProcesoF proceso = new ProcesoF(m, mo, p);
+                Thread hilo = new Thread(proceso);
+                hilo.start();
+                dispose();
             }
-
-            // Iniciar hilo con los valores capturados
-            ProcesoF proceso = new ProcesoF(marca, modelo, precio);
-            new Thread(proceso).start();
         });
 
         setVisible(true);
     }
 
+    // Método principal para correr
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Vista::new);
+        new Vista();
     }
 }

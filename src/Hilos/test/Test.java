@@ -1,6 +1,7 @@
 package Hilos.test;
 
 import Hilos.clase.*;
+import Hilos.vista.Vista;
 
 public class Test {
     public static void main(String[] args) {
@@ -14,9 +15,20 @@ public class Test {
         System.out.println("Dirección: "+ p.getDireccion());
 
 
+        ProcesoB b = new ProcesoB(100);
+        b.start();
+
+        // Iniciar ProcesoF correctamente
+        Runnable w = new ProcesoF();
+        Thread q = new Thread(w);
+        q.start();
+
+        // 👉 Mostrar la pantalla de Auto (Vista)
+        new Vista();
+
+
         /*
         ProcesoA a = new ProcesoA("Walter");
-        ProcesoB b = new ProcesoB(100);
         ProcesoC c = new ProcesoC(5);
         //ProcesoD d = new ProcesoD();
 
@@ -29,7 +41,6 @@ public class Test {
         Thread e = new Thread();
 
      ;   a.start();
-        b.start();
         c.start();
         d.start();
         e.start();
